@@ -9,7 +9,14 @@ export async function getHour3Data(code: string): Promise<string[]> {
     for (const v of s.split('\n')) {
         if (v.includes('var hour3data=')) {
             const vt = JSON.parse(v.replace('var hour3data=', ''));
-            return ((vt['1d'])) as string[]
+            let d = ((vt['1d'])) as string[]
+            let d7 = ((vt['7d'])) as string[][]
+            const d23 = ((vt['23d'])) as string[][]
+            d7 = d7.concat(d23)
+            for (const u of d7) {
+                d = d.concat(u)
+            }
+            return d;
         }
     }
     return []
