@@ -10,4 +10,6 @@ export interface WeatherData {
     type: WeatherType,
     temperature: number,
     wind: Wind,
+    day: number,
+    hour: number
 }
