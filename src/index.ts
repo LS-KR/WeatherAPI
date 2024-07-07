@@ -11,13 +11,14 @@ app.get('/', (c) => {
 
 app.get('/weather/:id', async (c) => {
   const id = c.req.param('id');
+  const header = {'Access-Control-Allow-Origin': '*'} as Record<string, string | string[]>
   if (isNumeric(id)) {
-    return c.json(await analyseHour3Data(await getHour3Data(id)))
+    return c.json(await analyseHour3Data(await getHour3Data(id)), 200, header)
   }
   else {
     const code = getCode(id)
     if (code == '0') return c.text('400 Bad Request')
-    return c.json(await analyseHour3Data(await getHour3Data(code)))
+    return c.json(await analyseHour3Data(await getHour3Data(code)), 200, header)
   }
 })
 
