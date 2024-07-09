@@ -11,7 +11,8 @@ export interface WeatherData {
     temperature: number,
     wind: Wind,
     day: number,
-    hour: number
+    hour: number,
+    precipitation: number
 }
 
 export interface Code {
