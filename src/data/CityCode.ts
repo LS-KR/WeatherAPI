@@ -454,3 +454,11 @@ export function getCode(city: string): string {
     }
     return '0';
 }
+
+export function cityList(): string[] {
+    const list = []
+    for (const v of cityCode) {
+        list.push(v.city)
+    }
+    return list
+}
