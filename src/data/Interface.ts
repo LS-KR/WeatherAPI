@@ -13,3 +13,8 @@ export interface WeatherData {
     day: number,
     hour: number
 }
+
+export interface Code {
+    city: string
+    code: string
+}

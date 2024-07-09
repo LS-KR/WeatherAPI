@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import {cityList, getCode} from "./data/CityCode";
+import {cityList, getCode, searchCode} from "./data/CityCode";
 import {analyseHour3Data, getHour3Data, isNumeric} from "./logic/helper";
 
 const app = new Hono()
@@ -24,6 +24,10 @@ app.get('/weather/:id', async (c) => {
 
 app.get('/list', (c) => {
   return c.json(cityList(), 200, header)
+})
+
+app.get('/search/:id', (c) => {
+  return c.json(searchCode(c.req.param('id')), 200, header)
 })
 
 const port = 8964

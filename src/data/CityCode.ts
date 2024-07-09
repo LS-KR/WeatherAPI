@@ -1,3 +1,5 @@
+import {Code} from "./Interface";
+
 const cityCode = [{ "city": "北京", "code": "101010100" }, { "city": "海淀", "code": "101010200" }, {
     "city": "朝阳",
     "code": "101010300"
@@ -3079,7 +3081,7 @@ const cityCode = [{ "city": "北京", "code": "101010100" }, { "city": "海淀",
 }, { "city": "彰化", "code": "101340403" }, { "city": "南投", "code": "101340404" }, {
     "city": "花莲",
     "code": "101340405"
-}, { "city": "云林", "code": "101340406" }]
+}, { "city": "云林", "code": "101340406" }] as Code[]
 
 
 export function getCode(city: string): string {
@@ -3095,4 +3097,14 @@ export function cityList(): string[] {
         list.push(v.city)
     }
     return list
+}
+
+export function searchCode(name: string): Code[] {
+    const list = [] as Code[];
+    for (const v of cityCode) {
+        if (v.city.includes(name) || name.includes(v.city)) {
+            list.push(v)
+        }
+    }
+    return list;
 }
