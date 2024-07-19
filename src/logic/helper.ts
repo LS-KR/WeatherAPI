@@ -29,7 +29,14 @@ export async function analyseHour3Data(data: string[]): Promise<WeatherData[]> {
     const weathers = [] as WeatherData[]
     for (const d of data) {
         const s = d.split(',')
-        const weather = {type: 'sun', wind: {direction: 'N', strength: 0}, temperature: NaN, day: NaN, hour: NaN, precipitation: NaN} as WeatherData
+        const weather = {
+            type: 'sun',
+            wind: { direction: 'N', strength: 0 },
+            temperature: NaN,
+            day: NaN,
+            hour: NaN,
+            precipitation: NaN
+        } as WeatherData
         for (const v of translateWeather) {
             if (s[2].includes(v[0])) {
                 weather.type = v[1]
@@ -55,5 +62,19 @@ export async function analyseHour3Data(data: string[]): Promise<WeatherData[]> {
         weather.precipitation = parseFloat(s[6])
         weathers.push(weather)
     }
-    return weathers;
+    weathers.sort((a, b) => {
+        const now = new Date();
+        const da = new Date(now.getFullYear(), now.getMonth(), a.day, a.hour, 0, 0);
+        const db = new Date(now.getFullYear(), now.getMonth(), b.day, b.hour, 0, 0);
+        return da.getTime() - db.getTime();
+    })
+    return uniqBy(weathers, JSON.stringify);
+}
+
+function uniqBy(a: Array<any>, key: any) {
+    let seen = new Set();
+    return a.filter(item => {
+        let k = key(item);
+        return seen.has(k) ? false : seen.add(k);
+    });
 }
